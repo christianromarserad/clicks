@@ -1,10 +1,13 @@
 import React from 'react';
+import StyledComponentLayout from './StyledComponents/StyledComponentLayout';
 
 function App() {
   return (
-    <div>
-      A chrome extension
-    </div>
+    <StyledComponentLayout>
+      <div>
+        A chrome extension
+      </div>
+    </StyledComponentLayout>
   );
 }
 

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run start --prefix ./chrome-extension",
     "dev": "npm run build --prefix ./chrome-extension && nodemon ./server/index.js"
   },
   "author": "Christian Serad",
