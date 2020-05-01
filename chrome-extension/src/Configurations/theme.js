@@ -1,7 +1,8 @@
 const theme = {
-    backgroundColor: "white",
+    backgroundColor: "LightCyan",
     textColor: "black",
-    cardColor: "gray"
+    cardColor: "gray",
+    fontFamily: "Roboto, sans-serif"
 };
 
 export default theme;
