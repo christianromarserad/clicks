@@ -16,9 +16,12 @@ export const InlineBlock = styled.div`
     padding-bottom: ${props => props.pb};
     padding-left: ${props => props.pl};
     border-radius: ${props => props.br};
+    box-shadow: ${props => props.bs};
+    border: ${props => props.border};
 `
 
 export const Text = styled(InlineBlock)`
+    color: ${props => props.color};
     font-family: ${props => props.ff};
     font-size: ${props => props.fs};
     font-weight: ${props => {
@@ -34,8 +37,19 @@ export const Text = styled(InlineBlock)`
     }};
 `
 
-export const Button = styled(InlineBlock)`
+export const Button = styled(Text)`
     cursor: pointer;
+    text-align: ${(props => {
+        if (props.textCenter) {
+            return 'center'
+        }
+        else if (props.textLeft) {
+            return 'left'
+        }
+        else if (props.textRight) {
+            return 'right'
+        }
+    })};
 `
 
 export const SvgButton = styled(Button)`

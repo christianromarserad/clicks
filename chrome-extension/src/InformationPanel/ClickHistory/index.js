@@ -1,8 +1,9 @@
 import React from 'react';
+import { Flex, InlineBlock, Text } from '../../StyledComponents';
 
 function ClickHistory() {
     return (
-        <div>Click History</div>
+        <Text>Click History</Text>
     );
 }
 

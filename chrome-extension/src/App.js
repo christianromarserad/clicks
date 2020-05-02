@@ -1,14 +1,15 @@
-import React from 'react';
-import StyledComponentLayout from './StyledComponents/StyledComponentLayout';
+import React, { useState } from 'react';
+import ClickCount from './ClickCount';
+import InformationPanel from './InformationPanel';
+
 
 function App() {
-  return (
-    <StyledComponentLayout>
-      <div>
-        A chrome extension
-      </div>
-    </StyledComponentLayout>
-  );
+	return (
+		<>
+			<ClickCount />
+			<InformationPanel />
+		</ >
+	);
 }
 
 export default App;

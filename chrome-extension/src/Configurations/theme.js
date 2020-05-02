@@ -1,7 +1,8 @@
 const theme = {
-    backgroundColor: "LightCyan",
+    backgroundColor: "#F5F5F5",
     textColor: "black",
-    cardColor: "gray",
+    primaryColor: "#2F4F4F",
+    secondaryColor: "#FF8C00",
     fontFamily: "Roboto, sans-serif"
 };
 
