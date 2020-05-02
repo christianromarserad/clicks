@@ -30,7 +30,7 @@ const manifest = {
    chrome_url_overrides: {
       newtab: "index.html"
    },
-   content_security_policy: "script-src 'self' 'sha256-q7IxwxOOIqS0aDLSUDnn1CbBfShDkY4/53yvM9biSjo='; object-src 'self'",
+   content_security_policy: "script-src 'self' 'sha256-99cX7+n6Y+U3DJq4tOklEE61PEkfcKHGB/IwsT83aqU='; object-src 'self'",
    key: process.env.CLICKS_APP_KEY,
    oauth2: {
       client_id: process.env.CLICKS_CLIENT_ID,
