@@ -37,24 +37,6 @@ export const Text = styled(InlineBlock)`
     }};
 `
 
-export const Button = styled(Text)`
-    cursor: pointer;
-    text-align: ${(props => {
-        if (props.textCenter) {
-            return 'center'
-        }
-        else if (props.textLeft) {
-            return 'left'
-        }
-        else if (props.textRight) {
-            return 'right'
-        }
-    })};
-`
-
-export const SvgButton = styled(Button)`
-    fill: ${props => props.fill};
-`
 
 
 export const Flex = styled(InlineBlock)`
