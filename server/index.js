@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 //Setting up mongo db 
-mongoose.connect('mongodb://localhost/clicks', {
+mongoose.connect(process.env.CLICKS_MONGODB_CONNECTION, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -23,8 +23,6 @@ app.use(express.json());
 
 //routes
 app.use('/user', require('./routes/user'));
-
-
 
 
 const port = process.env.PORT || 5000;
