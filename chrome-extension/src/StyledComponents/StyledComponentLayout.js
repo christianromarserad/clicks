@@ -18,14 +18,14 @@ const GlobalStyle = createGlobalStyle`
 `
 
 function StyledComponentLayout({ children }) {
-    return (
-        <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <Flex mr="auto" ml="auto" vertical>
-                {children}
-            </Flex>
-        </ThemeProvider>
-    );
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Flex mr="auto" ml="auto" vertical>
+        {children}
+      </Flex>
+    </ThemeProvider>
+  );
 }
 
 export default StyledComponentLayout;

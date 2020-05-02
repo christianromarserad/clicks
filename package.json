@@ -6,8 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm run start --prefix ./chrome-extension",
+    "build-manifest": "node -r dotenv/config buildChromeManifest.js",
     "dev": "npm run build --prefix ./chrome-extension && nodemon ./server/index.js"
   },
   "author": "Christian Serad",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
 }
