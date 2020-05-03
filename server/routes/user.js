@@ -4,8 +4,25 @@ const moment = require('moment');
 const userModel = require('../models/user');
 
 // Get current user
-router.get('/', passport.authenticate('bearer', { session: false }), (req, res) => {
-   res.json(req.user);
+router.get('/', passport.authenticate('bearer', { session: false }), async (req, res) => {
+   try {
+      let userDocument = await userModel.findOne({ email: req.user.email });
+
+      // I need to remove daily clicks that are in the past months so I can save db space
+      let currentMonthDailyClicks = userDocument.dailyClicks.filter((dailyClick) => {
+         let date = moment(dailyClick.date, 'MMMM Do YYYY').format('MMMM YYYY');
+         let currentDate = moment().format('MMMM YYYY');
+         return date === currentDate;
+      });
+      userDocument.dailyClicks = currentMonthDailyClicks;
+
+      let updatedUserDocument = await userDocument.save();
+      res.json(updatedUserDocument);
+   } catch (err) {
+      console.log(err);
+      res.status(500);
+      res.json(err);
+   }
 });
 
 
@@ -26,7 +43,7 @@ router.put('/incrementcount', passport.authenticate('bearer', { session: false }
       let dailyClickIndex = userDocument.dailyClicks.findIndex((dailyCountDocument) => (dailyCountDocument.date === moment().format('MMMM Do YYYY')));
 
       if (dailyClickIndex !== -1) {
-         //Increment count for today/s clicks count if it exist
+         //Increment count for today's clicks count if it exist
          userDocument.dailyClicks[dailyClickIndex].count += 1;
       }
       else {
