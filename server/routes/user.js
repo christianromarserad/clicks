@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const passport = require('passport');
 
-router.get('/', (req, res) => {
+router.get('/', passport.authenticate('bearer', { session: false }), (req, res) => {
    //TODO WITH AUTHENTICATION
-   res.send("get user");
+   res.json(req.user);
 });
 
 router.put('/incrementCount', (req, res) => {

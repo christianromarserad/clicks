@@ -9,8 +9,10 @@
   "author": "Christian Serad",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
     "express": "^4.17.1",
     "mongoose": "^5.9.11",
+    "passport": "^0.4.1",
     "passport-http-bearer": "^1.0.1"
   }
 }

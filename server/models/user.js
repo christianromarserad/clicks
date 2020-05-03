@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema({
       type: Number,
       required: true
    },
-   dailyClicksSchema: [dailyClicksSchema]
+   dailyClicks: [dailyClicksSchema]
 });
 
 let post = mongoose.model('users', userSchema);
