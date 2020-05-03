@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//Setting up mongo db 
+// Set up mongo db connection
 function configureMongoDb() {
    mongoose.connect(process.env.CLICKS_MONGODB_CONNECTION, {
       useNewUrlParser: true,

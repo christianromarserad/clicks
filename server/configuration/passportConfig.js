@@ -1,7 +1,7 @@
 const passport = require('passport');
-const BearerStrategy = require('passport-http-bearer');
+const BearerStrategy = require('passport-http-bearer').Strategy;
 const axios = require('axios');
-const user = require('../models/user');
+const userModel = require('../models/user');
 
 function configurePassport() {
    passport.use(new BearerStrategy(
@@ -16,18 +16,18 @@ function configurePassport() {
             let googleUserInfo = result.data;
 
             // Finds the user
-            user.findOne({ email: googleUserInfo.email }, async (err, userResult) => {
+            userModel.findOne({ email: googleUserInfo.email }, async (err, userResult) => {
 
                // If user does not exist, create a new user
                if (!userResult) {
-                  let newUser = new user();
+                  let userDocument = new userModel();
 
-                  newUser.email = googleUserInfo.email;
-                  newUser.name = googleUserInfo.given_name;
-                  newUser.totalCount = 0;
-                  newUser.dailyClicks = [];
+                  userDocument.email = googleUserInfo.email;
+                  userDocument.name = googleUserInfo.given_name;
+                  userDocument.totalCount = 0;
+                  userDocument.dailyClicks = [];
 
-                  let newCreatedUser = await newUser.save();
+                  let newCreatedUser = await userDocument.save();
                   return done(null, newCreatedUser);
                }
                else {
@@ -36,7 +36,6 @@ function configurePassport() {
             });
          }
          catch (error) {
-            console.log(error);
             done(null, false);
          }
       }
