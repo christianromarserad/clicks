@@ -1,20 +1,18 @@
 const router = require('express').Router();
 
-router.post('/incrementCount', (req, res) => {
-   //TODO
-   res.send("");
+router.get('/', (req, res) => {
+   //TODO WITH AUTHENTICATION
+   res.send("getDailyCounts");
 });
 
+router.put('/incrementCount', (req, res) => {
+   //TODO WITH AUTHENTICATION
+   res.send("incrementCount");
+});
 
-router.get('/getTop', (req, res) => {
+router.get('/topusers', (req, res) => {
    //TODO
-   res.send("");
-})
-
-
-router.get('/getDailyCounts', (req, res) => {
-   //TODO
-   res.send("");
+   res.send("getTopClicks");
 });
 
 module.exports = router;

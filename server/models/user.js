@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
-
-const dayCountSchema = mongoose.Schema({
+const dailyClicksSchema = mongoose.Schema({
    date: {
       type: String,
       required: true
    },
-   clickCount: {
+   count: {
       type: Number,
       required: true
    }
@@ -21,11 +20,11 @@ const userSchema = mongoose.Schema({
       type: String,
       required: true
    },
-   clickCount: {
+   totalCount: {
       type: Number,
       required: true
    },
-
+   dailyClicksSchema: [dailyClicksSchema]
 });
 
 let post = mongoose.model('users', userSchema);
