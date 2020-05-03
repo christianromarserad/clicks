@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 router.get('/', (req, res) => {
    //TODO WITH AUTHENTICATION
-   res.send("getDailyCounts");
+   res.send("get user");
 });
 
 router.put('/incrementCount', (req, res) => {
