@@ -1,3 +1,4 @@
+// A function for getting the standard date format for my application
 function getCurrentDate() {
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var currentDate = new Date();
@@ -8,6 +9,7 @@ function getCurrentDate() {
     return `${month} ${day} ${year}`;
 }
 
+// An event that sets the initial local value after installing the extension
 chrome.runtime.onInstalled.addListener(function () {
     let initialUserInfo = {
         totalCount: 0,
@@ -21,6 +23,19 @@ chrome.runtime.onInstalled.addListener(function () {
     });
 });
 
+
+// An event that removes the saved access token during sign in event
+chrome.identity.onSignInChanged.addListener(() => {
+    chrome.identity.getAuthToken({ interactive: false }, function (token) {
+        if (token) {
+            console.log('fired, ', token);
+            chrome.identity.removeCachedAuthToken({ token });
+        }
+    });
+});
+
+
+// An event that updates the click count on server or local after a click event on a webpage (contentScript.js is responsible for listening the click event and then send a message to background.js)
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => {
         if (request.event === 'click') {
