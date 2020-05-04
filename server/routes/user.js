@@ -91,6 +91,3 @@ router.get('/rank', passport.authenticate('bearer', { session: false }), async (
 
 module.exports = router;
 
-
-
-c
