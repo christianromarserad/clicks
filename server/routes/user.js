@@ -10,7 +10,7 @@ router.get('/', passport.authenticate('bearer', { session: false }), async (req,
 
       // I need to remove daily clicks that are in the past months so I can save db space
       let currentMonthDailyClicks = userDocument.dailyClicks.filter((dailyClick) => {
-         let date = moment(dailyClick.date, 'MMMM Do YYYY').format('MMMM YYYY');
+         let date = moment(dailyClick.date, 'MMMM D YYYY').format('MMMM YYYY');
          let currentDate = moment().format('MMMM YYYY');
          return date === currentDate;
       });
@@ -30,17 +30,9 @@ router.get('/', passport.authenticate('bearer', { session: false }), async (req,
 router.put('/incrementcount', passport.authenticate('bearer', { session: false }), async (req, res) => {
    try {
       let userDocument = await userModel.findOne({ email: req.user.email });
+      userDocument.totalCount += 1;
 
-      if (userDocument.totalCount < req.body.localTotalCount) {
-         //If the local storage has more click counts than in the server, set the server count to local click counts
-         userDocument.totalCount = req.body.localTotalCount
-      }
-      else {
-         //If server total click count is more than the local, ignore the local count and increment the server total count by one
-         userDocument.totalCount += 1;
-      }
-
-      let dailyClickIndex = userDocument.dailyClicks.findIndex((dailyCountDocument) => (dailyCountDocument.date === moment().format('MMMM Do YYYY')));
+      let dailyClickIndex = userDocument.dailyClicks.findIndex((dailyCountDocument) => (dailyCountDocument.date === moment().format('MMMM D YYYY')));
 
       if (dailyClickIndex !== -1) {
          //Increment count for today's clicks count if it exist
@@ -48,7 +40,7 @@ router.put('/incrementcount', passport.authenticate('bearer', { session: false }
       }
       else {
          //Create a record for today's click count if it doesn't exist yet
-         userDocument.dailyClicks.push({ date: moment().format('MMMM Do YYYY'), count: 1 });
+         userDocument.dailyClicks.push({ date: moment().format('MMMM D YYYY'), count: 1 });
       }
 
       let savedUserDocument = await userDocument.save();
@@ -98,3 +90,7 @@ router.get('/rank', passport.authenticate('bearer', { session: false }), async (
 })
 
 module.exports = router;
+
+
+
+c
