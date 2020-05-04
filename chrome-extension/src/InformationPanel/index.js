@@ -23,8 +23,8 @@ function InformationPanel({ theme }) {
 
    return (
       <Flex vertical vcenter mt="20px">
-         <InlineBlock w="1200px" h="450px" br="2px" bs="2px 2px 30px -15px grey" bg="white">
-            <Flex hleft mb="1rem" bs="1px 1px 11px -9px" bg={theme.primaryColor}>
+         <InlineBlock w="1200px">
+            <Flex hleft bs="1px 1px 11px -9px" bg={theme.primaryColor}>
                {
                   page === 'top-clicks' ?
                      <SelectedButton

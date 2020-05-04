@@ -55,7 +55,7 @@ router.put('/incrementcount', passport.authenticate('bearer', { session: false }
 
 
 // Gets the users that has the most clicks
-router.get('/topusers/:topNumber', passport.authenticate('bearer', { session: false }), async (req, res) => {
+router.get('/topusers/:topNumber', async (req, res) => {
    try {
       let usersDocument = await userModel.find();
       let topUsers = usersDocument.sort((user1, user2) => (user2.totalCount - user1.totalCount))
