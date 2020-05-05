@@ -34,8 +34,7 @@ chrome.identity.onSignInChanged.addListener(() => {
     });
 });
 
-
-// An event that updates the click count on server or local after a click event on a webpage (contentScript.js is responsible for listening the click event and then send a message to background.js)
+// Background script handles messages sent from related extensions (contentscripts, and new tab extension) Message types: click, signin
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => {
         if (request.event === 'click') {
@@ -82,6 +81,16 @@ chrome.runtime.onMessage.addListener(
                     });
                 }
             });
+        }
+        else if (request.event === 'signin') {
+            chrome.identity.getAuthToken({ interactive: true }, (token) => {
+                if (token) {
+                    chrome.tabs.update({ url: 'chrome://newtab' });
+                }
+            });
+        }
+        else if (request.event === 'logout') {
+            chrome.tabs.update({ url: 'https://accounts.google.com/logout' });
         }
     }
 );

@@ -17,7 +17,6 @@ function ClickHistory() {
             data: []
         };
 
-
         let daysInCurrentMonth = moment().daysInMonth();
 
         // Setting up the data points for the graph (x axis: date, y axis: click count)
@@ -59,7 +58,12 @@ function ClickHistory() {
                 });
             }
             else {
-                //TODO
+                chrome.storage.local.get(['user'], function (result) {
+                    let user = result.user;
+                    if (user) {
+                        setClickData(structureGraphData(result.user.dailyClicks));
+                    }
+                });
             }
         });
     }
