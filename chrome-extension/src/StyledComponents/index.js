@@ -45,24 +45,24 @@ export const Flex = styled(InlineBlock)`
     flex-grow: ${props => props.flexGrow};
     justify-content: ${props => {
         if (props.hstart) {
-            return 'start'
+            return 'flex-start'
         }
         else if (props.hcenter) {
             return 'center'
         }
         else if (props.hend) {
-            return 'end'
+            return 'flex-end'
         }
     }};
     align-items: ${props => {
         if (props.vstart) {
-            return 'start'
+            return 'flex-start'
         }
         else if (props.vcenter) {
             return 'center'
         }
         else if (props.vend) {
-            return 'end'
+            return 'flex-end'
         }
     }};
 `
