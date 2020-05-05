@@ -2,6 +2,25 @@
 import React, { useEffect, useState } from 'react';
 import { Flex, InlineBlock, Text } from '../StyledComponents';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const Image = styled.img`
+   height: 2rem;
+   width: 2rem;
+   margin: 4px;
+`
+
+const Button = styled(Text)`
+   cursor: pointer;
+   padding: 0.5rem;
+   font-weight: bold;
+   color: white;
+   background-color: #4285F4;
+   border-radius: 2px;
+   margin: 2px;
+`
+
+
 
 function GoogleSignIn() {
    const [isAuthneticated, setIsAuthenticated] = useState(false);
@@ -56,15 +75,14 @@ function GoogleSignIn() {
    }
 
    return (
-      <Flex bg="red" p="1rem">
+      <Flex p="1rem" hend>
          {
             isAuthneticated ?
-               <InlineBlock>
-                  <Text>{userName}</Text>
-                  <img src={image} />
-                  <button onClick={logout}>Logout</button>
-               </InlineBlock> :
-               <button onClick={signin}>Sign in</button>
+               <Flex vcenter>
+                  <Image src={image} />
+                  <Button onClick={logout}>Logout</Button>
+               </Flex> :
+               <Button onClick={signin}>Sign in</Button>
          }
       </Flex>
    );
