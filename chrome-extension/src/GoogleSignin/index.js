@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Flex, InlineBlock, Text } from '../StyledComponents';
 import axios from 'axios';
 import styled from 'styled-components';
+import ConfirmationModal from './ConfirmationModal';
 
 const Image = styled.img`
    height: 2rem;
@@ -21,12 +22,10 @@ const Button = styled(Text)`
    margin: 2px;
 `
 
-
-
 function GoogleSignIn() {
    const [isAuthneticated, setIsAuthenticated] = useState(false);
-   const [userName, setUserName] = useState(null);
    const [image, setImage] = useState(null);
+   const [isModalOpen, setIsModalOpen] = useState(false);
 
    useEffect(() => {
       // ComponentDidMount: determines if the user is authenticated
@@ -58,7 +57,6 @@ function GoogleSignIn() {
       chrome.identity.getAuthToken({ interactive: false }, function (token) {
          if (token) {
             axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`).then((result) => {
-               setUserName(result.data.given_name);
                setImage(result.data.picture);
             });
          }
@@ -66,8 +64,19 @@ function GoogleSignIn() {
    }
 
    // Signs in the user to Google
-   const signin = () => {
-      chrome.runtime.sendMessage({ event: "signin" });
+   const signin = (overwriteServer) => {
+      if (overwriteServer) {
+         chrome.storage.local.get(['user'], function (result) {
+            let user = result.user;
+            chrome.runtime.sendMessage({
+               event: "signin",
+               localData: user
+            });
+         });
+      }
+      else {
+         chrome.runtime.sendMessage({ event: "signin" });
+      }
    }
 
    // Logs out the user from Google
@@ -76,16 +85,23 @@ function GoogleSignIn() {
    }
 
    return (
-      <Flex p="1rem" hend>
-         {
-            isAuthneticated ?
-               <Flex vcenter>
-                  <Image src={image} />
-                  <Button onClick={logout}>Logout</Button>
-               </Flex> :
-               <Button onClick={signin}>Sign in</Button>
-         }
-      </Flex>
+      <>
+         <ConfirmationModal
+            isModalOpen={isModalOpen}
+            closeModal={setIsModalOpen.bind(this, false)}
+            signin={signin} />
+
+         <Flex p="1rem" hend>
+            {
+               isAuthneticated ?
+                  <Flex vcenter>
+                     <Image src={image} />
+                     <Button onClick={logout}>Logout</Button>
+                  </Flex> :
+                  <Button onClick={() => { isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true) }}>Sign in</Button>
+            }
+         </Flex>
+      </>
    );
 }
 
