@@ -61,7 +61,7 @@ function InformationPanel({ theme }) {
 
    return (
       <Flex vertical vcenter>
-         <InlineBlock p="1rem" w="100%">
+         <InlineBlock p="0 1rem 0 1rem" w="100%">
             <NavBar hleft bg="white">
                <NavOverlay animate={navOverlay} />
                {

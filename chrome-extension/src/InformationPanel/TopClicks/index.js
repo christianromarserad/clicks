@@ -43,11 +43,11 @@ function TopClicks() {
             <Flex vertical w="100%" p="1rem">
                 {
                     rank ?
-                        <Flex mb="20px" h="1.1rem">
+                        <Flex m="20px 0px 20px 0px" h="1.1rem">
                             <Flex flexGrow="1"><Text fs="1.1rem">{rank.name}</Text></Flex>
                             <Flex><Text fs="1.1rem">Rank: {rank.rank}</Text></Flex>
                         </Flex> :
-                        <Flex mb="20px" h="1.1rem">
+                        <Flex m="20px 0px 20px 0px" h="1.1rem">
                             <Text fs="1.1rem">Sign in to see your rank</Text>
                         </Flex>
                 }
