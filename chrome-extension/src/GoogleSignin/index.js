@@ -8,7 +8,7 @@ import ConfirmationModal from './ConfirmationModal';
 const Image = styled.img`
    height: 2rem;
    width: 2rem;
-   margin: 4px;
+   margin-right: 15px;
    border-radius: 50%;
 `
 
@@ -20,6 +20,14 @@ const Button = styled(Text)`
    background-color: #4285F4;
    border-radius: 2px;
    margin: 2px;
+`
+
+const Link = styled(Text)`
+   margin-right: 15px;
+   cursor: pointer;
+   :hover {
+      text-decoration: underline;
+   }
 `
 
 function GoogleSignIn() {
@@ -50,6 +58,10 @@ function GoogleSignIn() {
       chrome.identity.getAuthToken({ interactive: false }, function (token) {
          (token) ? setIsAuthenticated(true) : setIsAuthenticated(false);
       });
+   }
+
+   const redirectToGmail = () => {
+      window.location.href = 'https://mail.google.com/';
    }
 
    // Sets the user information(username, and picture) if authenticated
@@ -95,6 +107,7 @@ function GoogleSignIn() {
             {
                isAuthneticated ?
                   <Flex vcenter>
+                     <Link onClick={redirectToGmail}>Gmail</Link>
                      <Image src={image} />
                      <Button onClick={logout}>Logout</Button>
                   </Flex> :
