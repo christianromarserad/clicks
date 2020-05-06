@@ -57,10 +57,9 @@ function TopClicks() {
                         <Text>No Top Users</Text> :
                         topUsers.map((user, index) => (
                             <Flex
-                                bg="#EBEBEB"
+                                bg="white"
                                 mt="8px"
-                                p="8px"
-                                bs="0 1px 1px rgba(0,0,0,0.2)">
+                                p="8px">
                                 <Flex><Text bold w="2rem">{index + 1}</Text></Flex>
                                 <Flex><Text w="10rem">{user.name}</Text></Flex>
                                 <Flex flexGrow="1" hcenter><Text>{user.totalCount}</Text></Flex>

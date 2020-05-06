@@ -8,6 +8,7 @@ const Image = styled.img`
    height: 2rem;
    width: 2rem;
    margin: 4px;
+   border-radius: 50%;
 `
 
 const Button = styled(Text)`

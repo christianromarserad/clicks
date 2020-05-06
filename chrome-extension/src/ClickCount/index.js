@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { Text, Flex } from '../StyledComponents'
 import { withTheme } from 'styled-components';
 import axios from 'axios';
+import moment from 'moment';
 
 function ClickCount({ theme }) {
-    const [count, setCount] = useState(null);
+    const [totalCount, setTotalCount] = useState(0);
+    const [totalCountToday, setTotalCountToday] = useState(0);
 
     // Get the total clicks from the local storage
     const setCountFromLocal = () => {
@@ -13,10 +15,12 @@ function ClickCount({ theme }) {
         chrome.storage.local.get(['user'], function (result) {
             let user = result.user;
             if (!user) {
-                setCount(0);
+                setTotalCount(0);
             }
             else {
-                setCount(user.totalCount);
+                setTotalCount(user.totalCount);
+                let dailyClick = user.dailyClicks.find((dailyClick) => (dailyClick.date === moment().format('MMMM D YYYY')));
+                (dailyClick) ? setTotalCountToday(dailyClick.count) : setTotalCountToday(0);
             }
         });
     }
@@ -28,7 +32,10 @@ function ClickCount({ theme }) {
                 "Authorization": `Bearer ${token}`
             }
         }).then((result) => {
-            setCount(result.data.totalCount);
+            let user = result.data
+            setTotalCount(user.totalCount);
+            let dailyClick = user.dailyClicks.find((dailyClick) => (dailyClick.date === moment().format('MMMM D YYYY')));
+            (dailyClick) ? setTotalCountToday(dailyClick.count) : setTotalCountToday(0);
         });
     }
 
@@ -49,10 +56,15 @@ function ClickCount({ theme }) {
     }, [])
 
     return (
-        <Flex p="2rem" vertical vcenter bg={theme.primaryColor}>
-            <Text color="white" bold fs="5rem">{count}</Text>
-            <Text color="white">Total Clicks</Text>
-            <Text color="white" bold fs="2em" mt="1rem">Novice</Text>
+        <Flex p="1rem">
+            <Flex bg="white" vertical vcenter flexGrow="1" mr="0.5rem" p="1rem">
+                <Text bold fs="1.3rem">{totalCount}</Text>
+                <Text fs="0.6rem">Total Clicks</Text>
+            </Flex>
+            <Flex bg="white" vertical vcenter flexGrow="1" ml="0.5rem" p="1rem">
+                <Text bold fs="1.3rem">{totalCountToday}</Text>
+                <Text fs="0.6rem">Today's Total Clicks</Text>
+            </Flex>
         </Flex>
     );
 }
