@@ -85,7 +85,26 @@ chrome.runtime.onMessage.addListener(
         else if (request.event === 'signin') {
             chrome.identity.getAuthToken({ interactive: true }, (token) => {
                 if (token) {
+                    // Redirect the new tab page
                     chrome.tabs.update({ url: 'chrome://newtab' });
+                    console.log(request.localData);
+
+                    // Check if user wants to overwrite the server data with the local data
+                    if (request.localData) {
+                        fetch('http:localhost:5000/user/overwriteclickdata', {
+                            method: 'PUT',
+                            headers: {
+                                "Authorization": `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                totalCount: request.localData.totalCount,
+                                dailyClicks: request.localData.dailyClicks
+                            })
+                        }).catch((err) => {
+                            console.log(err)
+                        })
+                    }
                 }
             });
         }

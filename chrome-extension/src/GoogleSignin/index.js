@@ -76,7 +76,7 @@ function GoogleSignIn() {
    }
 
    // Signs in the user to Google
-   const signin = (overwriteServer) => {
+   function signin(overwriteServer) {
       if (overwriteServer) {
          chrome.storage.local.get(['user'], function (result) {
             let user = result.user;

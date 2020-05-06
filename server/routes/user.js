@@ -87,7 +87,36 @@ router.get('/rank', passport.authenticate('bearer', { session: false }), async (
       res.status(500);
       res.json(err);
    }
+});
+
+
+// Overwrites user's click the data using the local data
+router.put('/overwriteclickdata', passport.authenticate('bearer', { session: false }), async (req, res) => {
+   try {
+      let userDocument = await userModel.findOne({ email: req.user.email });
+      userDocument.totalCount = req.body.totalCount;
+      userDocument.dailyClicks = req.body.dailyClicks;
+      let savedUserDocument = userDocument.save();
+      res.json(savedUserDocument);
+   } catch (err) {
+      res.status(500)
+      res.json(err);
+   }
+});
+
+router.put('/updatename', passport.authenticate('bearer', { session: false }), async (req, res) => {
+   try {
+      let userDocument = await userModel.findOne({ email: req.user.email });
+      userDocument.name = req.body.name;
+      let savedUserDocument = userDocument.save();
+      res.json(savedUserDocument);
+   }
+   catch (err) {
+      res.status(500);
+      res.json(err);
+   }
 })
+
 
 module.exports = router;
 
