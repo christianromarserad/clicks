@@ -19,7 +19,7 @@ app.use('/user', require('./routes/user'));
 //Error Handler middleware
 app.use(errorHandler);
 
-const port = process.env.CLICKS_PORT || 5000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
 })
