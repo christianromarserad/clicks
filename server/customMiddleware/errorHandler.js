@@ -5,10 +5,10 @@ const errorHandler = (err, req, res, next) => {
 
    //Passport responds 401 unauthorize automatically
 
-   if (err instanceof require('../customErrors/ResourceNotFoundError')) {
+   if (err instanceof require('../CustomErrors/ResourceNotFoundError')) {
       res.status(err.status).json({ errorMessage: err.message });
    }
-   else if (err instanceof require('../customErrors/BadRequestError')) {
+   else if (err instanceof require('../CustomErrors/BadRequestError')) {
       res.status(err.status).json({ errorMessage: err.message });
    }
    else if (err instanceof mongoose.Error.ValidationError) {
