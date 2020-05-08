@@ -2,11 +2,17 @@ const router = require('express').Router();
 const passport = require('passport');
 const moment = require('moment');
 const userModel = require('../models/user');
+const ResourceNotFoundError = require('../customErrors/ResourceNotFoundError');
 
 // Get current user
-router.get('/', passport.authenticate('bearer', { session: false }), async (req, res) => {
+router.get('/', passport.authenticate('bearer', { session: false }), async (req, res, next) => {
    try {
       let userDocument = await userModel.findOne({ email: req.user.email });
+
+      if (!userDocument) {
+         // If User not found throw an error
+         throw new ResourceNotFoundError('User not found');
+      }
 
       // I need to remove daily clicks that are in the past months so I can save db space
       let currentMonthDailyClicks = userDocument.dailyClicks.filter((dailyClick) => {
@@ -17,19 +23,23 @@ router.get('/', passport.authenticate('bearer', { session: false }), async (req,
       userDocument.dailyClicks = currentMonthDailyClicks;
 
       let updatedUserDocument = await userDocument.save();
+
       res.json(updatedUserDocument);
    } catch (err) {
-      console.log(err);
-      res.status(500);
-      res.json(err);
+      next(err);
    }
 });
-
 
 // Update total click count for the current user
 router.put('/incrementcount', passport.authenticate('bearer', { session: false }), async (req, res) => {
    try {
       let userDocument = await userModel.findOne({ email: req.user.email });
+
+      if (!userDocument) {
+         // If User not found throw an error
+         throw new ResourceNotFoundError('User not found');
+      }
+
       userDocument.totalCount += 1;
 
       let dailyClickIndex = userDocument.dailyClicks.findIndex((dailyCountDocument) => (dailyCountDocument.date === moment().format('MMMM D YYYY')));
@@ -47,15 +57,13 @@ router.put('/incrementcount', passport.authenticate('bearer', { session: false }
 
       res.json(savedUserDocument);
 
-   } catch (error) {
-      res.status(500);
-      res.json(error);
+   } catch (err) {
+      next(err);
    }
 });
 
-
 // Gets the users that has the most clicks
-router.get('/topusers/:topNumber', async (req, res) => {
+router.get('/topusers/:topNumber', async (req, res, next) => {
    try {
       let usersDocument = await userModel.find();
       let topUsers = usersDocument.sort((user1, user2) => (user2.totalCount - user1.totalCount))
@@ -67,14 +75,12 @@ router.get('/topusers/:topNumber', async (req, res) => {
 
       res.json(topUsers);
    } catch (err) {
-      res.status(500);
-      res.json(err);
+      next(err);
    }
 });
 
-
 // Get the current user's rank
-router.get('/rank', passport.authenticate('bearer', { session: false }), async (req, res) => {
+router.get('/rank', passport.authenticate('bearer', { session: false }), async (req, res, next) => {
    try {
       let usersDocument = await userModel.find();
       let sortedUsers = usersDocument.sort((user1, user2) => (user2.totalCount - user1.totalCount))
@@ -84,14 +90,12 @@ router.get('/rank', passport.authenticate('bearer', { session: false }), async (
          rank
       });
    } catch (err) {
-      res.status(500);
-      res.json(err);
+      next(err);
    }
 });
 
-
 // Overwrites user's click the data using the local data
-router.put('/overwriteclickdata', passport.authenticate('bearer', { session: false }), async (req, res) => {
+router.put('/overwriteclickdata', passport.authenticate('bearer', { session: false }), async (req, res, next) => {
    try {
       let userDocument = await userModel.findOne({ email: req.user.email });
       userDocument.totalCount = req.body.totalCount;
@@ -104,19 +108,23 @@ router.put('/overwriteclickdata', passport.authenticate('bearer', { session: fal
    }
 });
 
-router.put('/updatename', passport.authenticate('bearer', { session: false }), async (req, res) => {
+router.put('/updatename', passport.authenticate('bearer', { session: false }), async (req, res, next) => {
    try {
       let userDocument = await userModel.findOne({ email: req.user.email });
+
+      if (!userDocument) {
+         // If User not found throw an error
+         throw new ResourceNotFoundError('User not found');
+      }
+
       userDocument.name = req.body.name;
       let savedUserDocument = userDocument.save();
       res.json(savedUserDocument);
    }
    catch (err) {
-      res.status(500);
-      res.json(err);
+      next(err)
    }
-})
-
+});
 
 module.exports = router;
 
