@@ -4,8 +4,9 @@ import { Flex, InlineBlock, Text } from '../../StyledComponents';
 import { ResponsiveLine } from '@nivo/line';
 import axios from 'axios';
 import moment from 'moment';
+import { withTheme } from 'styled-components';
 
-function ClickHistory() {
+function ClickHistory({ theme }) {
     const [clickData, setClickData] = useState([]);
 
     // This will generate the graph data structure that will be used for the graph
@@ -109,7 +110,7 @@ function ClickHistory() {
                         legendOffset: -40,
                         legendPosition: 'middle'
                     }}
-                    colors={{ scheme: 'nivo' }}
+                    colors={theme.secondaryColor}
                     pointSize={10}
                     pointColor={{ theme: 'background' }}
                     pointBorderWidth={2}
@@ -149,4 +150,4 @@ function ClickHistory() {
     );
 }
 
-export default ClickHistory;
+export default withTheme(ClickHistory);
