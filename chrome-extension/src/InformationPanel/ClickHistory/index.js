@@ -62,7 +62,19 @@ function ClickHistory({ theme }) {
                 chrome.storage.local.get(['user'], function (result) {
                     let user = result.user;
                     if (user) {
-                        setClickData(structureGraphData(result.user.dailyClicks));
+
+                        //Deleting previous month dailyClicks to save storage space
+                        let currentMonthDailyClicks = user.dailyClicks.filter((dailyClick) => {
+                            if (moment(dailyClick.date, 'MMMM D YYYY').format('MMMM') === moment().format('MMMM')) {
+                                return dailyClick;
+                            }
+                        });
+
+                        user.dailyClicks = currentMonthDailyClicks;
+
+                        chrome.storage.local.set({ user: user }, function () {
+                            setClickData(structureGraphData(user.dailyClicks));
+                        });
                     }
                 });
             }

@@ -11,7 +11,6 @@ function ClickCount({ theme }) {
 
     // Get the total clicks from the local storage
     const setCountFromLocal = () => {
-        console.log('get count from local');
         chrome.storage.local.get(['user'], function (result) {
             let user = result.user;
             if (!user) {
