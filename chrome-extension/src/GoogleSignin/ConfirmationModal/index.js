@@ -1,27 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Flex, Text, InlineBlock } from '../../StyledComponents';
+import { Flex, Text, InlineBlock, PrimaryButton, SecondaryButton } from '../../StyledComponents';
 import { motion } from 'framer-motion';
 import BaseModal from '../../BaseModal';
-
-
-const Button = styled(InlineBlock)`
-   cursor: pointer;
-   padding: 0.6rem 1rem 0.6rem 1rem;
-   margin: 5px;
-   font-weight: bold;
-   border-radius: 2px;
-`
-
-const YesButton = styled(Button)`
-   background-color: #4285F4;
-   color: white;
-`
-
-const NoButton = styled(Button)`
-   background-color: gray;
-   color: white;
-`
 
 function ConfirmationModal({ signin, isModalOpen, closeModal }) {
    return (
@@ -37,8 +18,8 @@ function ConfirmationModal({ signin, isModalOpen, closeModal }) {
                   </Text>
                </Flex>
                <Flex hend>
-                  <NoButton onClick={() => { signin(false); }}>No</NoButton>
-                  <YesButton onClick={() => { signin(true); }}>Yes</YesButton>
+                  <PrimaryButton onClick={() => { signin(false); }}>No</PrimaryButton>
+                  <SecondaryButton onClick={() => { signin(true); }}>Yes</SecondaryButton>
                </Flex>
             </Flex>
          </motion.div>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Flex } from '../StyledComponents'
 import { withTheme } from 'styled-components';
-import axios from 'axios';
+import axios from '../Configurations/clickServerAxios';
 import moment from 'moment';
 
 function ClickCount({ theme }) {
@@ -26,7 +26,7 @@ function ClickCount({ theme }) {
 
     // Get the total clicks from the server storage
     const setCountFromServer = (token) => {
-        axios.get('http:localhost:5000/user', {
+        axios.get('user', {
             headers: {
                 "Authorization": `Bearer ${token}`
             }

@@ -1,28 +1,10 @@
 /*global chrome*/
 import React, { useState, useEffect } from 'react';
 import BaseModal from '../../../BaseModal';
-import { Flex, InlineBlock } from '../../../StyledComponents';
-import axios from 'axios'
+import { Flex, PrimaryButton, SecondaryButton } from '../../../StyledComponents';
+import axios from '../../../Configurations/clickServerAxios';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-
-const Button = styled(InlineBlock)`
-   cursor: pointer;
-   padding: 0.6rem 1rem 0.6rem 1rem;
-   margin: 5px;
-   font-weight: bold;
-   border-radius: 2px;
-`
-
-const UpdateButton = styled(Button)`
-   background-color: #4285F4;
-   color: white;
-`
-
-const CancelButton = styled(Button)`
-   background-color: gray;
-   color: white;
-`
 
 const Input = styled.input`
 	outline: none;
@@ -44,7 +26,7 @@ function EditNameModal({ isModalOpen, closeModal }) {
       if (isModalOpen) {
          chrome.identity.getAuthToken({ interactive: false }, function (token) {
             if (token) {
-               axios.get('http://localhost:5000/user', {
+               axios.get('user', {
                   headers: {
                      "Authorization": `Bearer ${token}`
                   }
@@ -83,8 +65,8 @@ function EditNameModal({ isModalOpen, closeModal }) {
                   placeholder="name" />
                <Flex flexGrow="1" />
                <Flex hend>
-                  <CancelButton onClick={closeModal}>Cancel</CancelButton>
-                  <UpdateButton onClick={updateName}>Update</UpdateButton>
+                  <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+                  <PrimaryButton onClick={updateName}>Update</PrimaryButton>
                </Flex>
             </Flex>
          </motion.div>

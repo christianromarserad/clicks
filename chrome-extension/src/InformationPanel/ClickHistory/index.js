@@ -1,8 +1,8 @@
 /*global chrome*/
 import React, { useState, useEffect } from 'react';
-import { Flex, InlineBlock, Text } from '../../StyledComponents';
+import { Flex, Text } from '../../StyledComponents';
 import { ResponsiveLine } from '@nivo/line';
-import axios from 'axios';
+import axios from '../../Configurations/clickServerAxios';
 import moment from 'moment';
 import { withTheme } from 'styled-components';
 
@@ -50,7 +50,7 @@ function ClickHistory({ theme }) {
     const setGraphData = () => {
         chrome.identity.getAuthToken({ interactive: false }, function (token) {
             if (token) {
-                axios.get('http://localhost:5000/user', {
+                axios.get('user', {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }

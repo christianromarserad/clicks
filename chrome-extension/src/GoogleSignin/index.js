@@ -1,6 +1,6 @@
 /*global chrome*/
 import React, { useEffect, useState } from 'react';
-import { Flex, InlineBlock, Text } from '../StyledComponents';
+import { Flex, PrimaryButton, Text } from '../StyledComponents';
 import axios from 'axios';
 import styled from 'styled-components';
 import ConfirmationModal from './ConfirmationModal';
@@ -10,16 +10,6 @@ const Image = styled.img`
    width: 2rem;
    margin-right: 15px;
    border-radius: 50%;
-`
-
-const Button = styled(Text)`
-   cursor: pointer;
-   padding: 0.5rem;
-   font-weight: bold;
-   color: white;
-   background-color: #4285F4;
-   border-radius: 2px;
-   margin: 2px;
 `
 
 const Link = styled(Text)`
@@ -109,9 +99,9 @@ function GoogleSignIn() {
                   <Flex vcenter>
                      <Link onClick={redirectToGmail}>Gmail</Link>
                      <Image src={image} />
-                     <Button onClick={logout}>Logout</Button>
+                     <PrimaryButton onClick={logout}>Logout</PrimaryButton>
                   </Flex> :
-                  <Button onClick={() => { isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true) }}>Sign in</Button>
+                  <PrimaryButton onClick={() => { isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true) }}>Sign in</PrimaryButton>
             }
          </Flex>
       </>

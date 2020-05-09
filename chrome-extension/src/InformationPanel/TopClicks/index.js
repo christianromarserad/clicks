@@ -1,7 +1,7 @@
 /*global chrome*/
 import React, { useState, useEffect } from 'react';
 import { Flex, InlineBlock, Text } from '../../StyledComponents';
-import axios from 'axios';
+import axios from '../../Configurations/clickServerAxios';
 import styled from 'styled-components';
 import EditNameModalName from './EditNameModal';
 
@@ -22,7 +22,7 @@ function TopClicks() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     const getTopUsers = () => {
-        axios.get('http:localhost:5000/user/topusers/10').then((results) => {
+        axios.get('user/topusers/10').then((results) => {
             setTopUsers(results.data);
         });
     }
@@ -30,7 +30,7 @@ function TopClicks() {
     const getRank = () => {
         chrome.identity.getAuthToken({ interactive: false }, function (token) {
             if (token) {
-                axios.get('http:localhost:5000/user/rank', {
+                axios.get('user/rank', {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }

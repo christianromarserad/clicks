@@ -37,7 +37,25 @@ export const Text = styled(InlineBlock)`
     }};
 `
 
+export const PrimaryButton = styled(Text)`
+    cursor: pointer;
+    padding: 0.5rem;
+    font-weight: bold;
+    color: white;
+    background-color: #4285F4;
+    border-radius: 2px;
+    margin: 2px;
+    :hover{
+        background-color: #0b4fc0;
+    }
+`
 
+export const SecondaryButton = styled(PrimaryButton)`
+    background-color: #BEBEBE;
+    :hover {
+        background-color: #767676;
+    }
+`
 
 export const Flex = styled(InlineBlock)`
     display: flex;
