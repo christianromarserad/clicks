@@ -2,7 +2,7 @@ const router = require('express').Router();
 const passport = require('passport');
 const moment = require('moment');
 const userModel = require('../models/user');
-const ResourceNotFoundError = require('../tempname/ResourceNotFoundError');
+const ResourceNotFoundError = require('../customErrors/ResourceNotFoundError');
 
 // Get current user
 router.get('/', passport.authenticate('bearer', { session: false }), async (req, res, next) => {
