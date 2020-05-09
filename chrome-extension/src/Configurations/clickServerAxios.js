@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const axiosClickServer = axios.create({
-   baseURL: 'http://localhost:5000/'
+   baseURL: process.env.REACT_APP_CLICK_SERVER_URL
 });
 
 export default axiosClickServer;
