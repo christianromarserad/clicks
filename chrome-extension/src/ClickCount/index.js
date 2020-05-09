@@ -46,9 +46,7 @@ function ClickCount({ theme }) {
 
         // ComponentDidMount: add event listener for window focus and then load click count from server or local
         window.addEventListener('focus', () => {
-            console.log('fired focus');
             chrome.identity.getAuthToken({ interactive: false }, function (token) {
-                console.log(token);
                 (token) ? setCountFromServer(token) : setCountFromLocal();
             });
         });

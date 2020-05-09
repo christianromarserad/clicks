@@ -19,7 +19,7 @@ chrome.runtime.onInstalled.addListener(function () {
         }],
     }
     chrome.storage.local.set({ user: initialUserInfo }, function () {
-        console.log(initialUserInfo);
+        console.log(`Initialized user`);
     });
 });
 
@@ -28,7 +28,6 @@ chrome.runtime.onInstalled.addListener(function () {
 chrome.identity.onSignInChanged.addListener(() => {
     chrome.identity.getAuthToken({ interactive: false }, function (token) {
         if (token) {
-            console.log('fired, ', token);
             chrome.identity.removeCachedAuthToken({ token });
         }
     });
@@ -75,9 +74,7 @@ chrome.runtime.onMessage.addListener(
                             }
                         }
 
-                        chrome.storage.local.set({ user: user }, function () {
-                            console.log(user);
-                        });
+                        chrome.storage.local.set({ user: user });
                     });
                 }
             });
@@ -87,7 +84,6 @@ chrome.runtime.onMessage.addListener(
                 if (token) {
                     // Redirect the new tab page
                     chrome.tabs.update({ url: 'chrome://newtab' });
-                    console.log(request.localData);
 
                     // Check if user wants to overwrite the server data with the local data
                     if (request.localData) {
